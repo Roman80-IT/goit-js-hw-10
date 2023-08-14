@@ -1,3 +1,4 @@
+// https://axios-http.com/docs/intro
 //?   npm i axios
 
 //* Імпорт бібліотеки axios для здійснення HTTP-запитів
