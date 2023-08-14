@@ -23,3 +23,20 @@ fetchBreeds()
   .catch(() =>
     Notify.failure('Oops! Something went wrong! Try to reload the page!')
   );
+
+//* Обробник події зміни вибраної породи
+$select.addEventListener('change', event => {
+  $card.innerHTML = ''; //* Очистка обгортки для відображення інформації про кота
+  $loader.classList.remove('is-hidden'); //* Показуємо спіннер завантаження
+  $selectWrapper.classList.add('is-hidden'); //* Ховаємо селект для вибору породи
+  fetchCatByBreed(event.target.value)
+    .then(breed => {
+      $selectWrapper.classList.remove('is-hidden'); //* Показуємо селект після завантаження даних
+      $loader.classList.add('is-hidden'); //* Ховаємо спіннер завантаження
+      renderCard(breed[0]); //* Рендеринг інформації про кота
+    })
+    .catch(() => {
+      $loader.classList.add('is-hidden'); //* Ховаємо спіннер завантаження у випадку помилки
+      Notify.failure('Oops! Something went wrong! Try to reload the page!'); //* Відображення сповіщення про помилку
+    });
+});
