@@ -1,6 +1,5 @@
 //?   npm i slim-select
 //?   npm i notiflix
-//?   npm install axios // поки не використовую
 
 import SlimSelect from 'slim-select';
 import 'slim-select/dist/slimselect.css';
@@ -39,3 +38,33 @@ $select.addEventListener('change', event => {
       Notify.failure('Oops! Something went wrong! Try to reload the page!');
     });
 });
+
+//* Рендеринг списку порід у селекті
+function renderBreeds(breeds) {
+  const markup = breeds
+    .map(({ id, name }) => {
+      return `<option value="${id}">${name}</option>`;
+    })
+    .join('');
+
+  $select.innerHTML = `${markup}`;
+  new SlimSelect({
+    select: '#single',
+  });
+}
+
+//* Рендеринг інформації про кота
+function renderCard({ url, breeds }) {
+  const { name, description, temperament } = breeds[0];
+  const markup = `<img class="image" src="${url}" alt="">
+  <div>
+        <h1>${name}</h1>
+        <p>
+        ${description}
+        </p>
+        <p>
+          <span class="temperament-title">Temperament: </span> ${temperament}
+        </p>
+      </div>`;
+  $card.innerHTML = `${markup}`;
+}
